@@ -1,4 +1,4 @@
-import { bot } from '../src/index.js';
+import { bot } from '../src/index.ts';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
