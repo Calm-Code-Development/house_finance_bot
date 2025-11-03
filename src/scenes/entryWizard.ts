@@ -3,7 +3,7 @@ import {
 	chooseDateAndSave,
 	receiveAmount,
 	receiveDescription
-} from "./utils";
+} from "./utils.js";
 
 export const entryWizard = new Scenes.WizardScene(
 	'entryWizard',
