@@ -1,8 +1,8 @@
 import { Markup } from 'telegraf';
-import db from '../db/inMemoryDB.ts'
-import { Transaction } from '../db/entities/transaction.ts';
-import { parseDateBR } from '../utils.ts';
-import { showMainMenu } from '../commands/mainMenu.ts';
+import db from '../db/inMemoryDB'
+import { Transaction } from '../db/entities/transaction';
+import { parseDateBR } from '../utils';
+import { showMainMenu } from '../commands/mainMenu';
 
 async function returnReply (ctx, date: Date) {
 

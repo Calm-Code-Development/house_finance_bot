@@ -1,4 +1,4 @@
-import type { Transaction } from "./entities/transaction.ts"
+import type { Transaction } from "./entities/transaction"
 
 export class InMemoryDB {
 	private static instance: InMemoryDB;

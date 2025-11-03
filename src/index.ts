@@ -1,9 +1,9 @@
 import * as dotenv from 'dotenv';
 import { Telegraf, Scenes, session } from 'telegraf';
-import { entryWizard } from './scenes/entryWizard.ts';
-import { exitWizard } from './scenes/exitWizard.ts';
-import { registerStart } from './commands/start.ts';
-import { registerBalance } from './commands/balance.ts';
+import { entryWizard } from './scenes/entryWizard';
+import { exitWizard } from './scenes/exitWizard';
+import { registerStart } from './commands/start';
+import { registerBalance } from './commands/balance';
 
 dotenv.config();
 

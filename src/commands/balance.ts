@@ -1,6 +1,6 @@
 import { Markup, Telegraf } from 'telegraf';
-import db from '../db/inMemoryDB.ts';
-import { showMainMenu } from './mainMenu.ts';
+import db from '../db/inMemoryDB';
+import { showMainMenu } from './mainMenu';
 
 function formatMonthName(date: Date) {
 	return date.toLocaleString('pt-BR', { month: 'long', year: 'numeric' });
