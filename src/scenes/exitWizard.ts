@@ -1,5 +1,5 @@
 import { Scenes } from "telegraf";
-import { chooseDateAndSave, receiveAmount, receiveDescription } from "./utils";
+import { chooseDateAndSave, receiveAmount, receiveDescription } from "./utils.js";
 
 export const exitWizard = new Scenes.WizardScene(
 	'exitWizard',

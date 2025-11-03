@@ -1,8 +1,8 @@
 import { Markup } from 'telegraf';
 import db from '../db/inMemoryDB'
-import { Transaction } from '../db/entities/transaction';
-import { parseDateBR } from '../utils';
-import { showMainMenu } from '../commands/mainMenu';
+import { Transaction } from '../db/entities/transaction.js';
+import { parseDateBR } from '../utils.js';
+import { showMainMenu } from '../commands/mainMenu.js';
 
 async function returnReply (ctx, date: Date) {
 

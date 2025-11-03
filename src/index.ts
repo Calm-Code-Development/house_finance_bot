@@ -1,9 +1,9 @@
 import 'dotenv/config';
 import { Telegraf, Scenes, session } from 'telegraf';
-import { entryWizard } from './scenes/entryWizard';
-import { exitWizard } from './scenes/exitWizard';
-import { registerStart } from './commands/start';
-import { registerBalance } from './commands/balance';
+import { entryWizard } from './scenes/entryWizard.js';
+import { exitWizard } from './scenes/exitWizard.js';
+import { registerStart } from './commands/start.js';
+import { registerBalance } from './commands/balance.js';
 
 export function setupBot() {
 	if (!process.env.BOT_KEY) {
