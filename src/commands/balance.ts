@@ -1,5 +1,5 @@
 import { Markup, Telegraf } from 'telegraf';
-import db from '../db/inMemoryDB';
+import db from '../db/inMemoryDB.js';
 import { showMainMenu } from './mainMenu.js';
 
 function formatMonthName(date: Date) {
