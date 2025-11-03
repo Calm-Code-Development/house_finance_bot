@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { setupBot } from '../src/index';
+import { setupBot } from '../src/index.js';
 
 const bot = setupBot();
 
