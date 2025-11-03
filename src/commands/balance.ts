@@ -1,6 +1,6 @@
 import { Markup, Telegraf } from 'telegraf';
-import db from '../db/inMemoryDB.js';
 import { showMainMenu } from './mainMenu.js';
+import { getAllForUser, getBalanceMonth } from '../db/index.js';
 
 function formatMonthName(date: Date) {
 	return date.toLocaleString('pt-BR', { month: 'long', year: 'numeric' });
@@ -10,16 +10,18 @@ const getBalance = async (ctx) => {
 	await ctx.answerCbQuery();
 	const userId = ctx.from!.id;
 
-	const transactions = db.getAllForUser(userId);
+	const transactions = await getAllForUser(userId);
 
 	if(!transactions.length) {
 		await ctx.reply('Você ainda não possui transações registradas.');
 		return showMainMenu(ctx);
 	}
 
-	const months = Array.from(
-		new Set(transactions.map(transaction => `${transaction.date.getFullYear()}-${transaction.date.getMonth()}`))
-	);
+	const months = Array.from(new Set(
+		transactions.map(
+			transaction => `${transaction.date.getFullYear()}-${transaction.date.getMonth()}`
+		)
+	));
 
 	// Cria botões dinamicamente
 	const buttons = months.map((m) => {
@@ -45,7 +47,7 @@ export function registerBalance(bot: Telegraf) {
 		const year = parseInt(yearStr);
 		const month = parseInt(monthStr) + 1;
 
-		const balance = db.getBalanceMonth(
+		const balance = await getBalanceMonth(
 			userId,
 			year,
 			month

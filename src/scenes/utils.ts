@@ -1,16 +1,13 @@
 import { Markup } from 'telegraf';
-import db from '../db/inMemoryDB.js'
-import { Transaction } from '../db/entities/transaction.js';
 import { parseDateBR } from '../utils.js';
 import { showMainMenu } from '../commands/mainMenu.js';
+import { addTransaction } from '../db/index.js';
 
 async function returnReply (ctx, date: Date) {
 
 	const { amount, description, type } = ctx.wizard.state.data as any;
 
-	const transaction = new Transaction(ctx.from!.id, type, amount, description, date);
-
-	db.addTransaction(transaction);
+	await addTransaction(ctx.from!.id, type, amount, description, date);
 
 	const localeDate = date.toLocaleDateString('pt-BR');
 	const stringType = type === 'entry' ? 'Entrada' : 'Saída';
