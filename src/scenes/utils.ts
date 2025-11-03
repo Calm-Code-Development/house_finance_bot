@@ -1,5 +1,5 @@
 import { Markup } from 'telegraf';
-import db from '../db/inMemoryDB'
+import db from '../db/inMemoryDB.js'
 import { Transaction } from '../db/entities/transaction.js';
 import { parseDateBR } from '../utils.js';
 import { showMainMenu } from '../commands/mainMenu.js';
