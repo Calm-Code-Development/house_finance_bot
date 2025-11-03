@@ -19,7 +19,10 @@ const getBalance = async (ctx) => {
 
 	const months = Array.from(new Set(
 		transactions.map(
-			transaction => `${transaction.date.getFullYear()}-${transaction.date.getMonth()}`
+			transaction => {
+				const date = new Date(transaction.date);
+				`${date.getFullYear()}-${date.getMonth()}`
+			}
 		)
 	));
 
