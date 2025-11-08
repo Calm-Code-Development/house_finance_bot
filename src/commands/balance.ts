@@ -1,6 +1,7 @@
 import { Markup, Telegraf } from 'telegraf';
 import { showMainMenu } from './mainMenu.js';
 import { getAllForUser, getBalanceMonth } from '../db/index.js';
+import { replyOrEdit } from '../utils.js';
 
 function formatMonthName(date: Date) {
 	return date.toLocaleString('pt-BR', { month: 'long', year: 'numeric' });
@@ -12,18 +13,16 @@ const getBalance = async (ctx) => {
 
 	const transactions = await getAllForUser(userId);
 
-	if(!transactions.length) {
-		await ctx.reply('Você ainda não possui transações registradas.');
+	if (!transactions.length) {
+		await replyOrEdit(ctx, 'Você ainda não possui transações registradas.');
 		return showMainMenu(ctx);
 	}
 
 	const months = Array.from(new Set(
-		transactions.map(
-			transaction => {
-				const date = new Date(transaction.date);
-				return `${date.getFullYear()}-${date.getMonth()}`
-			}
-		)
+		transactions.map(transaction => {
+			const date = new Date(transaction.date);
+			return `${date.getFullYear()}-${date.getMonth()}`
+		})
 	));
 
 	// Cria botões dinamicamente
@@ -33,9 +32,9 @@ const getBalance = async (ctx) => {
 		return [Markup.button.callback(label, `balance_${year}_${month}`)];
 	});
 
-	await ctx.reply(
+	await replyOrEdit(ctx,
 		'📅 Escolha o mês para ver o balanço:',
-		Markup.inlineKeyboard(buttons)
+		{ reply_markup: Markup.inlineKeyboard(buttons).reply_markup }
 	);
 };
 
@@ -50,21 +49,17 @@ export function registerBalance(bot: Telegraf) {
 		const year = parseInt(yearStr);
 		const month = parseInt(monthStr) + 1;
 
-		const totals: any[] = await getBalanceMonth(
-			userId,
-			year,
-			month
-		);
+		const totals: any[] = await getBalanceMonth(userId, year, month);
 
 		const balance = totals.reduce((total, typeBalance) => {
 			return total + Number(typeBalance.total)
-		}, 0)
+		}, 0);
 
-		await ctx.reply(
-		`📅 *Balanço do mês*\n\n` +
-		`📊 Saldo: *R$ ${balance}*`,
-		{ parse_mode: 'Markdown' }
-	);
-	await showMainMenu(ctx);
+		const text =
+			`📅 *Balanço do mês*\n\n` +
+			`📊 Saldo: *R$ ${balance}*`;
+
+		await replyOrEdit(ctx, text, { parse_mode: 'Markdown' });
+		await showMainMenu(ctx);
 	});
 }
