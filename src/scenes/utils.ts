@@ -3,7 +3,25 @@ import { parseDateBR } from '../utils.js';
 import { showMainMenu } from '../commands/mainMenu.js';
 import { addTransaction } from '../db/index.js';
 
-async function returnReply (ctx, date: Date) {
+// Limpa rascunhos do wizard (dados temporários) e sai da cena se o usuário estiver nela
+export async function clearWizardDraft(ctx: any) {
+	try {
+
+		if (ctx.wizard && ctx.wizard.state && ctx.wizard.state.data) {
+
+			delete ctx.wizard.state.data;
+		}
+
+		if (ctx.scene && ctx.scene.current && typeof ctx.scene.leave === 'function') {
+
+			await ctx.scene.leave();
+		}
+	} catch (e) {
+		// silencioso — não queremos quebrar a exibição do menu por erros aqui
+	}
+}
+
+async function returnReply (ctx: any, date: Date) {
 
 	const { amount, description, type } = ctx.wizard.state.data as any;
 
@@ -20,7 +38,7 @@ async function returnReply (ctx, date: Date) {
 	return ctx.scene.leave();
 }
 
-export const receiveAmount = async (ctx) => {
+export const receiveAmount = async (ctx: any) => {
 
 	const amount = parseFloat((ctx.message as any).text);
 	
@@ -35,7 +53,7 @@ export const receiveAmount = async (ctx) => {
 	return ctx.wizard.next();
 };
 
-export const receiveDescription = async (ctx) => {
+export const receiveDescription = async (ctx: any) => {
 
 	const description = (ctx.message as any).text;
 
@@ -51,7 +69,7 @@ export const receiveDescription = async (ctx) => {
 	return ctx.wizard.next();
 };
 
-export const chooseDateAndSave = async (ctx) => {
+export const chooseDateAndSave = async (ctx: any) => {
 
 	if ('callbackQuery' in ctx && ctx.callbackQuery?.data) {
 		
