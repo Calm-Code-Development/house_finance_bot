@@ -50,15 +50,19 @@ export function registerBalance(bot: Telegraf) {
 		const year = parseInt(yearStr);
 		const month = parseInt(monthStr) + 1;
 
-		const balance = await getBalanceMonth(
+		const totals: any[] = await getBalanceMonth(
 			userId,
 			year,
 			month
 		);
 
+		const balance = totals.reduce((total, typeBalance) => {
+			return total + typeBalance.amount.toFixed(2)
+		}, 0)
+
 		await ctx.reply(
 		`📅 *Balanço do mês*\n\n` +
-		`📊 Saldo: *R$ ${balance.toFixed(2)}*`,
+		`📊 Saldo: *R$ ${balance}*`,
 		{ parse_mode: 'Markdown' }
 	);
 	await showMainMenu(ctx);

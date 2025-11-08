@@ -41,15 +41,13 @@ export async function getBalanceMonth(
 	year: number,
 	month: number
 ) {
-	const { data, error } = await supabase.rpc('get_monthly_transactions', {
+	const { data, error } = await supabase.rpc('get_monthly_totals', {
 		p_user_id: userId,
 		p_year: year,
 		p_month: month
 	});
 
 	if (error) throw error;
-	
-	console.log(data)
 	
 	return data;
 }
