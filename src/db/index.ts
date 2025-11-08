@@ -1,4 +1,4 @@
-import 'dotenv/config';
+
 import { createClient } from '@supabase/supabase-js';
 
 export const supabase = createClient(
@@ -41,7 +41,7 @@ export async function getBalanceMonth(
 	year: number,
 	month: number
 ) {
-	const { data, error } = await supabase.rpc('get_monthly_totals', {
+	const { data, error } = await supabase.rpc('get_monthly_transactions', {
 		p_user_id: userId,
 		p_year: year,
 		p_month: month
