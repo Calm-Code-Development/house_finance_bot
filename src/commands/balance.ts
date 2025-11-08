@@ -57,7 +57,7 @@ export function registerBalance(bot: Telegraf) {
 		);
 
 		const balance = totals.reduce((total, typeBalance) => {
-			return total + typeBalance.total.toFixed(2)
+			return total + Number(typeBalance.total)
 		}, 0)
 
 		await ctx.reply(
